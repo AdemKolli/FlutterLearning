@@ -1,5 +1,7 @@
+import 'package:calculator/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DisplayPanel extends StatelessWidget {
   final String toDisplay;
@@ -33,8 +35,8 @@ class DisplayPanel extends StatelessWidget {
             Text(
               toDisplay,
               style: GoogleFonts.ibmPlexSans(
-                  textStyle: const TextStyle(
-                color: Colors.black,
+                  textStyle: TextStyle(
+                color: Provider.of<ThemeProvider>(context).secondaryColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 52,
               )),

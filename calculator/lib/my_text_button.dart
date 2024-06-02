@@ -1,5 +1,7 @@
+import 'package:calculator/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class MyTextButton extends StatelessWidget {
   const MyTextButton({super.key, this.onPressed, required this.child, this.onLongPress, this.color});
@@ -16,9 +18,9 @@ class MyTextButton extends StatelessWidget {
       height: 12,
       child: TextButton(
         style: ButtonStyle( 
-          foregroundColor: MaterialStateProperty.all<Color>(color ?? Colors.black),
-          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 255, 247, 247)),
-          overlayColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 255, 235, 235)),
+          foregroundColor: MaterialStateProperty.all<Color>(color ?? Provider.of<ThemeProvider>(context).secondaryColor),
+          backgroundColor: MaterialStateProperty.all<Color>(Provider.of<ThemeProvider>(context).primaryColor),
+          overlayColor: MaterialStateProperty.all<Color>(Provider.of<ThemeProvider>(context).hoverColor),
           textStyle: MaterialStatePropertyAll(
             GoogleFonts.ibmPlexSans(
               textStyle: const TextStyle(
