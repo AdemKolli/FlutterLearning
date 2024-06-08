@@ -7,6 +7,7 @@ import 'package:portfolio/widgets/my_navigation_bar.dart';
 import 'package:portfolio/pages/projects_page.dart';
 import 'package:portfolio/pages/services_page.dart';
 import 'package:portfolio/pages/testemonials_page.dart';
+import 'package:portfolio/widgets/screen_info.dart';
 
 import 'widgets/my_navigation_bar.dart';
 import 'widgets/nav_bar_button.dart';
@@ -19,6 +20,10 @@ class PortfolioPage extends StatefulWidget {
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
+  ScrollController _scrollViewController = ScrollController();
+  bool _showAppbar = true;
+  bool isScrollingDown = false;
+
   @override
   void initState() {
     super.initState();
@@ -51,24 +56,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
     super.dispose();
   }
 
-  ScrollController _scrollViewController = ScrollController();
-  bool _showAppbar = true;
-  bool isScrollingDown = false;
-
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-
+    ScreenInfo.width = MediaQuery.of(context).size.width;
+    ScreenInfo.height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
         children: <Widget>[
           AnimatedContainer(
-              height: _showAppbar ? 82.0 : 0.0,
-              width: width,
-              color: const Color(0xFFF9E4B2),
-              duration: const Duration(milliseconds: 100),
-              child: MyNavigationBar(width: width, scrollViewController: _scrollViewController)
+            height: _showAppbar ? 82.0 : 0.0,
+            width: ScreenInfo.width,
+            color: const Color(0xFFF9E4B2),
+            duration: const Duration(milliseconds: 200),
+            child: MyNavigationBar(
+              width: ScreenInfo.width,
+              scrollViewController: _scrollViewController
+            )
           ),
           Expanded(
             child: SingleChildScrollView(
