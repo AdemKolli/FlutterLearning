@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: ScreenInfo.width * 0.34,
+                  width: ScreenInfo.width > 600 ? ScreenInfo.width * 0.34 : ScreenInfo.width * 0.19,
                   height: 1.5,
                   decoration: BoxDecoration(
                       color: Colors.black,
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: ScreenInfo.width * 0.34,
+                  width: ScreenInfo.width > 600 ? ScreenInfo.width * 0.34 : ScreenInfo.width * 0.19,
                   height: 1.5,
                   decoration: BoxDecoration(
                       color: Colors.black,
@@ -82,14 +82,19 @@ class HomePage extends StatelessWidget {
               width: ScreenInfo.width,
               color: const Color(0xFF323232),
               child: CarouselSlider(
-                  items: const [
-                    CarouselItem(),
+                  items: ScreenInfo.width > 600 ? [
+                    CarouselItemDesktop(),
+                  ] : [
+                    CarouselItemMobile(skill: 'Mobile Development',),
+                    CarouselItemMobile(skill: 'UI/UX Design',),
+                    CarouselItemMobile(skill: 'Visual Identities',),
                   ],
                   options: CarouselOptions(
                     autoPlay: true,
                     enableInfiniteScroll: true,
                     autoPlayCurve: Curves.linear,
                     pauseAutoPlayOnTouch: true,
+                    aspectRatio: ScreenInfo.width * 0.8 / ScreenInfo.height * 0.1 ,
                     autoPlayAnimationDuration: const Duration(seconds: 6),
                   )),
             )

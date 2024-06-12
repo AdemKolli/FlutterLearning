@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/widgets/nav_bar_button.dart';
+import 'package:portfolio/widgets/screen_info.dart';
 
 class MyNavigationBar extends StatelessWidget {
   const MyNavigationBar({
@@ -20,7 +21,7 @@ class MyNavigationBar extends StatelessWidget {
           'assets/pictures/OOAsset 1@2scx.png',
           scale: 30,
         ),
-        SizedBox(
+        ScreenInfo.width > 600 ? SizedBox(
           width: width * 0.6,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -29,34 +30,34 @@ class MyNavigationBar extends StatelessWidget {
                 isOpaque: false,
                 data: 'Home',
                 scrollViewController: _scrollViewController,
-                position: 300,
+                position: 0,
               ),
               NavBarButton(
                 isOpaque: false,
                 data: 'Services',
                 scrollViewController: _scrollViewController,
-                position: 900,
+                position: ScreenInfo.height,
               ),
               NavBarButton(
                 isOpaque: false,
                 data: 'Projects',
                 scrollViewController: _scrollViewController,
-                position: 900,
+                position: ScreenInfo.height * 2,
               ),
               NavBarButton(
                 isOpaque: false,
                 data: 'Testemonials',
                 scrollViewController: _scrollViewController,
-                position: 900,
+                position: ScreenInfo.height * 3,
               ),
             ],
           ),
-        ),
+        ) : SizedBox(),
         NavBarButton(
           isOpaque: true,
           data: 'Contact Me',
           scrollViewController: _scrollViewController,
-          position: 900,
+          position: ScreenInfo.height * 4,
         ),
       ],
     );

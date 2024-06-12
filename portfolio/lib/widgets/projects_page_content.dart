@@ -15,21 +15,24 @@ class ProjectsPageContent extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenInfo.width * 0.1),
       child: Column(
+
         children: [
-          const Text(
+          Text(
             'Previous Projects',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 48,
+              fontSize: ScreenInfo.width > 600 ? 48 : 36,
               fontFamily: 'HubotExpanded',
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text(
+          Text(
             'Check out my accounts on :',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: ScreenInfo.width > 600 ? 22 : 18,
               fontFamily: 'HubotExpanded',
               fontWeight: FontWeight.w300,
             ),
@@ -50,10 +53,10 @@ class AccountButtonSet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ScreenInfo.height * 0.6,
+      height: ScreenInfo.width > 600 ? ScreenInfo.height * 0.7 : ScreenInfo.height * 0.9,
       child: Column(
         children: [
-          Row(
+          ScreenInfo.width > 600 ? Row(
             children: [
               const Expanded(
                 child: GitHubButton(),
@@ -65,13 +68,24 @@ class AccountButtonSet extends StatelessWidget {
                 child: DribbbleButton(),
               )
             ],
+          ) : Column(
+            children: [
+              GitHubButton(),
+              SizedBox(
+                height: ScreenInfo.height * 0.02,
+              ),
+              DribbbleButton(),
+              SizedBox(
+                height: ScreenInfo.height * 0.02,
+              ),
+              InstagramButtonMobile()
+              
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: ScreenInfo.height * 0.035),
-              child: const InstagramButton(),
-            ),
-          )
+          ScreenInfo.width > 600 ? Padding(
+            padding: EdgeInsets.only(top: ScreenInfo.width > 600 ? ScreenInfo.height * 0.035 : ScreenInfo.height * 0.02),
+            child: const InstagramButton(),
+          ) : const SizedBox()
         ],
       ),
     );
@@ -231,10 +245,10 @@ class _DribbbleButtonState extends State<DribbbleButton> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset('assets/pictures/Vector.svg'),
-                const Text('Dribbble',
+                Text('Dribbble',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 34,
+                      fontSize: ScreenInfo.width > 600 ? 34 : 30,
                       fontFamily: 'HubotExpanded',
                       fontWeight: FontWeight.bold,
                     ))
@@ -243,17 +257,113 @@ class _DribbbleButtonState extends State<DribbbleButton> {
             SizedBox(
               height: ScreenInfo.height * 0.02,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('My profile link',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: ScreenInfo.width > 600 ? 22 : 18,
                       fontFamily: 'HubotExpanded',
                       fontWeight: FontWeight.bold,
                     )),
                 Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.white,
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class InstagramButtonMobile extends StatefulWidget {
+  const InstagramButtonMobile({
+    super.key,
+  });
+
+  @override
+  State<InstagramButtonMobile> createState() => _InstagramButtonMobileState();
+}
+
+class _InstagramButtonMobileState extends State<InstagramButtonMobile> {
+  bool isHovered = false;
+  _launchURLBrowser() async {
+  var url = Uri.parse("https://instagram.com");
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onHover: (value) {
+        setState(() {
+          value ? isHovered = true : isHovered = false;
+        });
+      },
+      onTap: _launchURLBrowser,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding:
+            EdgeInsets.symmetric(horizontal: isHovered ? 36 : 30, vertical: 32),
+        decoration:BoxDecoration(
+          boxShadow: isHovered
+              ? [
+                  BoxShadow(
+                      color: const Color(0xFFE216F4).withOpacity(0.2),
+                      offset: const Offset(5, 2),
+                      blurRadius: 20),
+                  BoxShadow(
+                      color: const Color(0xFFFA8518).withOpacity(0.2),
+                      offset: const Offset(-5, -7),
+                      blurRadius: 20),
+                ]
+              : null,
+          gradient: const LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topRight,
+              colors: [
+                Color(0xFFFA8518),
+                Color(0xFFE216F4),
+              ]),
+          borderRadius: BorderRadius.circular(26),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SvgPicture.asset('assets/pictures/Vector.svg'),
+                Text('Dribbble',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenInfo.width > 600 ? 34 : 30,
+                      fontFamily: 'HubotExpanded',
+                      fontWeight: FontWeight.bold,
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: ScreenInfo.height * 0.02,
+            ),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('My profile link',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenInfo.width > 600 ? 22 : 18,
+                      fontFamily: 'HubotExpanded',
+                      fontWeight: FontWeight.bold,
+                    )),
+                const Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: Colors.white,
                 )
@@ -328,10 +438,10 @@ class _GitHubButtonState extends State<GitHubButton> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset('assets/pictures/Component 2.svg'),
-                const Text('Github',
+                 Text('Github',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 34,
+                      fontSize: ScreenInfo.width > 600 ? 34 : 30,
                       fontFamily: 'HubotExpanded',
                       fontWeight: FontWeight.bold,
                     ))
@@ -340,17 +450,17 @@ class _GitHubButtonState extends State<GitHubButton> {
             SizedBox(
               height: ScreenInfo.height * 0.02,
             ),
-            const Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('My profile link',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: ScreenInfo.width > 600 ? 22 : 18,
                       fontFamily: 'HubotExpanded',
                       fontWeight: FontWeight.bold,
                     )),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: Colors.white,
                 )

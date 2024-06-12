@@ -11,7 +11,7 @@ class ServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenInfo.height * 1.15,
+      height: ScreenInfo.width > 600 ? ScreenInfo.height * 1.15 : ScreenInfo.height * 2.3,
       color: const Color(0xFFFFFDF9),
       child: Column(
         children: [
