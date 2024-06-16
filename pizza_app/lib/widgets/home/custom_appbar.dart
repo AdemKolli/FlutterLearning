@@ -6,7 +6,9 @@ import 'package:pizza_app/widgets/core/screen_size.dart';
 import '../core/rey_pizzario_logo.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key, required this.children});
+
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -16,25 +18,7 @@ class CustomAppBar extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: ScreenSize.width * 0.07),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-          children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.workspaces_outlined),
-            color: Colors.white,
-          ),
-          const ReyPizzarioLogo(),
-           CustomButton(
-            onPressed: () {},
-            height: ScreenSize.height * 0.05,
-            width: ScreenSize.width * 0.13,
-            color: const Color(0xFFFFFAF4),
-            shadowColor: Colors.black.withOpacity(0.15),
-            child: const Icon(
-              Icons.shopping_bag_outlined,
-              color: Colors.red,
-            ),
-          ),
-        ]),
+          children: children),
       ),
     );
   }

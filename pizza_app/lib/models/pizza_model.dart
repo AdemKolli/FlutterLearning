@@ -1,8 +1,5 @@
-class Pizza {
-  String? name;
-  String? description;
-  String? image;
-  double? price;
+import 'package:pizza_app/models/product_model.dart';
 
-  Pizza({this.name, this.description, this.image, this.price});
+class Pizza extends Product {
+  Pizza(super.name, super.description, super.image, super.price) ;
 }

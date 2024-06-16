@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pizza_app/providers/bottombar_provider.dart';
-import 'package:pizza_app/routes/cart_screen.dart';
+import 'package:pizza_app/providers/navigation_provider.dart';
+import 'package:pizza_app/providers/stock_provider.dart';
 import 'package:pizza_app/routes/home_screen.dart';
 import 'package:pizza_app/widgets/core/screen_size.dart';
 import 'package:provider/provider.dart';
@@ -17,17 +17,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenSize.height = MediaQuery.of(context).size.height;
     ScreenSize.width = MediaQuery.of(context).size.width;
-    return  SafeArea(
+    return SafeArea(
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (context) => BottomBarProvider(),
-          )
+          ChangeNotifierProvider(create: (_) => NavigationProvider()),
+          ChangeNotifierProvider(create: (_) => StockProvider()),
         ],
         child: const MaterialApp(
           title: 'Pizza App',
           debugShowCheckedModeBanner: false,
-          home: CartScreen(),
+          home: HomeScreen(),
         ),
       ),
     );
