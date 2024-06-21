@@ -18,21 +18,19 @@ class TypesDetails extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 3,
           itemBuilder: (context, index) {
+            List<Pizza> list = provider.pizzas.toList();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: PizzaItemCard(
-                image: provider.pizzas[index].image!,
-                title: provider.pizzas[index].name!,
-                price: provider.pizzas[index].price!,
+                itemId: list[index].pizzaId!,
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (context) => Expanded(
                       child: AlertDialog(
                         backgroundColor: const Color(0xFFFFFAF4),
-
-                        title: Text(provider.pizzas[index].name!),
-                        content: Text(provider.pizzas[index].description!),
+                        title: Text(provider.pizzas.toList()[index].name!),
+                        content: Text(provider.pizzas.toList()[index].description!),
                         actions: [
                           TextButton(
                             onPressed: () {},

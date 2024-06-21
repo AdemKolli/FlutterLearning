@@ -1,25 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart%20';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pizza_app/models/pizza_model.dart';
 import 'package:pizza_app/providers/stock_provider.dart';
 import 'package:pizza_app/widgets/core/custom_button.dart';
 import 'package:pizza_app/widgets/core/screen_size.dart';
 import 'package:provider/provider.dart';
 
 class PizzaItemCard extends StatelessWidget {
-  const PizzaItemCard({super.key, required this.image, required this.title, required this.price, this.onPressed});
-
-  final String image;
-  final String title;
-  final double price;
+  PizzaItemCard({super.key, this.onPressed , required this.itemId});
+  final int itemId;
+  late Pizza itemContent;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<StockProvider>(
-      builder: (context, provider, _) => Container(
+      builder: (context, provider, _) {
+        itemContent = provider.pizzas.firstWhere((element) => element.pizzaId == itemId);
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.only(left: 16,right: 16,top: 8, bottom: 20),
         width: ScreenSize.width * 0.6,
         height: ScreenSize.height * 0.4,
@@ -52,10 +53,12 @@ class PizzaItemCard extends StatelessWidget {
                     ),
                   ),
                   CustomButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      provider.toggleFavorite(itemContent.pizzaId!);
+                    },
                     child: Icon(
-                      Icons.favorite_border_rounded,
-                      color: Colors.black.withOpacity(0.4),
+                      provider.pizzas.firstWhere((element) => element.pizzaId == itemId).isFavorite! ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                      color: provider.pizzas.firstWhere((element) => element.pizzaId == itemId).isFavorite! ? Colors.red : Colors.black.withOpacity(0.4),
                       size: 24,
                     ),
                   ),
@@ -66,7 +69,7 @@ class PizzaItemCard extends StatelessWidget {
               child: SizedBox(
                 width: ScreenSize.width * 0.5,
                 child: Image.asset(
-                  image,
+                  itemContent.image!,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -77,7 +80,7 @@ class PizzaItemCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  title,
+                  itemContent.name!,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
@@ -118,7 +121,7 @@ class PizzaItemCard extends StatelessWidget {
                     height: ScreenSize.height * 0.06,
                     child: Center(
                       child: Text(
-                        "\$${price.toString()}",
+                        "\$${itemContent.price.toString()}",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.poppins(
                           color: Colors.red,
@@ -133,7 +136,7 @@ class PizzaItemCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      );},
     );
   }
 }

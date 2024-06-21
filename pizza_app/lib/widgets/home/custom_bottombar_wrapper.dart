@@ -9,7 +9,7 @@ class CustomBottomBarWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenSize.height * 0.2,
+      height: ScreenSize.height * 0.19,
       decoration: BoxDecoration(
         color: const Color(0xFFFFFAF4),
         borderRadius: const BorderRadius.only(
