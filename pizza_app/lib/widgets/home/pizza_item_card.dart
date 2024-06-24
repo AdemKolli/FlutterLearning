@@ -97,15 +97,18 @@ class PizzaItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomButton(
-                    onPressed: () {},
-                    color: Colors.red,
+                    duration: const Duration(milliseconds: 200),
+                    onPressed: () {
+                      provider.cart.containsKey(itemId) ? null : provider.addToCart(itemId);
+                    },
+                    color: provider.cart.containsKey(itemId) ? Colors.grey : Colors.red,
                     height: ScreenSize.height * 0.05,
-                    shadowColor: Colors.red.withOpacity(0.3),
+                    shadowColor: provider.cart.containsKey(itemId) ? Colors.grey.withOpacity(0.3) : Colors.red.withOpacity(0.3),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: ScreenSize.width * 0.05),
                       child: Center(
                         child: Text(
-                          "Add to cart",
+                          provider.cart.containsKey(itemId) ? "In cart" : "Add to cart",
                           textAlign: TextAlign.right,
                           style: GoogleFonts.poppins(
                             color: Colors.white,

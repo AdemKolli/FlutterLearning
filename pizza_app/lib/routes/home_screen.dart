@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart%20';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pizza_app/providers/navigation_provider.dart';
+import 'package:pizza_app/providers/stock_provider.dart';
 import 'package:pizza_app/widgets/core/custom_button.dart';
 import 'package:pizza_app/widgets/core/rey_pizzario_logo.dart';
 import 'package:pizza_app/widgets/favorites/favorites_content.dart';
@@ -77,22 +81,48 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontWeight: FontWeight.w500),
                                   )),
                       ),
-                      CustomButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) => const CartMenu()
-                          );
-                        },
-                        height: ScreenSize.height * 0.05,
-                        width: ScreenSize.width * 0.13,
-                        color: const Color(0xFFFFFAF4),
-                        shadowColor: Colors.black.withOpacity(0.15),
-                        child: const Icon(
-                          Icons.shopping_bag_outlined,
-                          color: Colors.red,
+                      Consumer<StockProvider>(
+                        builder: (context, provider, _) => Stack(
+                          children: [
+                            CustomButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (context) => const CartMenu()
+                                );
+                              },
+                              height: ScreenSize.height * 0.05,
+                              width: ScreenSize.width * 0.13,
+                              color: const Color(0xFFFFFAF4),
+                              shadowColor: Colors.black.withOpacity(0.15),
+                              child: const Icon(
+                                Icons.shopping_bag_outlined,
+                                color: Colors.red,
+                              ),
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 150),
+                              child: provider.cart.isEmpty ? const SizedBox() : Container(
+                                height: ScreenSize.width * 0.033,
+                                width: ScreenSize.width * 0.033,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.red,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                     '${provider.cart.length}',
+                                     style: GoogleFonts.poppins(
+                                         color: Colors.white,
+                                         fontSize: 8,
+                                         fontWeight: FontWeight.w500),
+                                   ),
+                                  ),
+                                ),
+                            ),
+                          ],
                         ),
                       ),
                     ]),
